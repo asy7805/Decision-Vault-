@@ -1,0 +1,166 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* Colors */
+  --primary-blue: #0176D3;
+  --dark-navy: #032D60;
+  --light-blue: #E8F4FD;
+  --salesforce-teal: #06A59A;
+  --teal-light: #F0FAFA;
+  --white: #FFFFFF;
+  --surface-gray: #F3F3F3;
+  --border-gray: #E5E5E5;
+  --text-primary: #181818;
+  --text-secondary: #747474;
+  --amber-warning: #FF9A3C;
+  --red-danger: #EA001E;
+  --green-success: #2E844A;
+
+  /* Typography Sizes */
+  --font-xs: 11px;
+  --font-sm: 13px;
+  --font-base: 14px;
+  --font-md: 16px;
+  --font-lg: 20px;
+  --font-xl: 24px;
+  --font-xxl: 32px;
+
+  /* Spacing */
+  --spacing-1: 4px;
+  --spacing-2: 8px;
+  --spacing-3: 12px;
+  --spacing-4: 16px;
+  --spacing-6: 24px;
+  --spacing-8: 32px;
+  --spacing-12: 48px;
+
+  /* Borders */
+  --border-default: 1px solid var(--border-gray);
+  --border-subtle: 1px solid var(--surface-gray);
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Shadows */
+  --shadow-card: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-elevated: 0 4px 16px rgba(0,0,0,0.10);
+  --shadow-sidebar: 2px 0 8px rgba(0,0,0,0.06);
+
+  /* Layout */
+  --sidebar-width: 220px;
+  --topbar-height: 56px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  color: var(--text-primary);
+  background-color: var(--surface-gray);
+  min-width: 1280px; /* Desktop only per requirements */
+  overflow-x: auto;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+}
+
+/* Animations */
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.3); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.fade-enter {
+  opacity: 0;
+}
+.fade-enter-active {
+  opacity: 1;
+  transition: opacity 150ms ease-in-out;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+  transition: opacity 150ms ease-in-out;
+}
+
+/* Base utility text classes for placeholders */
+h1 {
+  font-size: var(--font-lg);
+  font-weight: 600;
+  margin-bottom: var(--spacing-2);
+}
+
+.placeholder-card {
+  background: var(--white);
+  border: var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-card);
+  padding: var(--spacing-8);
+  text-align: center;
+  margin: 0 auto;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.placeholder-subtitle {
+  color: var(--text-secondary);
+  font-size: var(--font-base);
+  font-weight: 400;
+  margin-bottom: var(--spacing-4);
+}
+
+.placeholder-pill {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  padding: var(--spacing-1) var(--spacing-3);
+  border-radius: 9999px;
+  font-size: var(--font-sm);
+  font-weight: 500;
+}
+
+/* --- Phase 7 Global Polish --- */
+
+/* Scrollbar Polish (P18) */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #E5E5E5;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #C8C8C8;
+}
+
+/* Focus State Accessibility (P19) */
+button:focus-visible, 
+input:focus-visible, 
+select:focus-visible {
+  outline: none;
+}
+button:focus-visible {
+  box-shadow: 0 0 0 3px rgba(1,118,211,0.25);
+}

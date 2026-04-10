@@ -1,0 +1,27 @@
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+}
+
+.main-content-wrapper {
+  margin-left: var(--sidebar-width);
+  padding-top: var(--topbar-height);
+  background-color: var(--surface-gray);
+  min-height: 100vh;
+  width: calc(100% - var(--sidebar-width));
+}
+
+.main-fade-container {
+  padding: var(--spacing-8);
+  height: 100%;
+  transition: opacity 150ms ease-in-out;
+}
+
+.fade-in {
+  opacity: 1;
+}
+
+.fade-out {
+  opacity: 0;
+}

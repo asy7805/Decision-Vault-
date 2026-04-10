@@ -1,0 +1,306 @@
+/* Animations */
+@keyframes fadeInUpSubtle {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUpStandard {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInSimple {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulseAmber {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+/* Container */
+.queue-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 32px;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* Summary Bar */
+.summary-bar {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeInUpSubtle 250ms ease-out 0ms forwards;
+}
+
+.summary-pill {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--white);
+  border: 1px solid var(--border-gray);
+  border-radius: 20px;
+  padding: 8px 16px;
+  font-size: 13px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+}
+
+.sp-val-1 { color: var(--text-primary); font-weight: 500; }
+.sp-val-2 { color: var(--amber-warning); font-weight: 500; }
+.sp-val-3 { color: var(--green-success); font-weight: 500; }
+.sp-val-4 { color: var(--primary-blue); font-weight: 500; }
+
+/* Queue Header */
+.queue-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  opacity: 0;
+  animation: fadeInSimple 250ms ease-out 100ms forwards;
+}
+
+.qh-left h1 {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin-bottom: 2px;
+}
+
+.qh-left p {
+  font-size: 13px;
+  color: var(--text-secondary);
+}
+
+.qh-right {
+  display: flex;
+  gap: 8px;
+}
+
+.filter-pill {
+  border-radius: 20px;
+  padding: 6px 14px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.filter-active {
+  background-color: var(--primary-blue);
+  color: var(--white);
+  border: none;
+}
+
+.filter-inactive {
+  background-color: var(--white);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-gray);
+}
+
+/* Cards List */
+.cards-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* Base Card Styling */
+.decision-card {
+  border-radius: 12px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  /* Card animations defined individually below */
+}
+
+.hargrove-card {
+  background-color: #FAFAFA;
+  border: 1px solid var(--border-gray);
+  opacity: 0; /* starts 0 for animation, then holds at 0.75 */
+  border-left: 4px solid var(--green-success);
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  animation: slideHargrove 300ms ease-out 150ms forwards;
+}
+@keyframes slideHargrove {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 0.75; transform: translateY(0); }
+}
+
+.volta-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-gray);
+  border-left: 4px solid var(--amber-warning);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  animation: fadeInUpStandard 300ms ease-out 250ms forwards;
+}
+
+.pinebrook-card {
+  background-color: var(--white);
+  border: 1px solid var(--border-gray);
+  border-left: 4px solid var(--red-danger);
+  box-shadow: var(--shadow-elevated);
+  animation: fadeInUpStandard 300ms ease-out 350ms forwards;
+}
+
+/* Card Header */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.title-resolved { color: var(--text-secondary); }
+.title-pending { color: var(--text-primary); }
+
+.card-subtitle {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+.status-badge {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 4px 12px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.badge-overridden {
+  background-color: #EEF6F0;
+  color: var(--green-success);
+}
+
+.badge-pending {
+  background-color: #FFF4E8;
+  color: var(--amber-warning);
+}
+
+.badge-pulse {
+  width: 6px;
+  height: 6px;
+  background-color: var(--amber-warning);
+  border-radius: 50%;
+  animation: pulseAmber 1.5s infinite;
+}
+
+/* Urgency Banner (Pinebrook) */
+.urgency-banner {
+  background-color: #FDECEA;
+  border-radius: 6px;
+  padding: 6px 12px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.urgency-text {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--red-danger);
+}
+
+/* Card Divider */
+.card-divider {
+  border-top: 1px solid var(--surface-gray);
+  margin: 14px 0;
+}
+
+/* Detail Row */
+.detail-row {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.detail-item {
+  display: flex;
+  flex-direction: column;
+}
+
+.detail-label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 4px;
+}
+
+.detail-val {
+  font-size: 13px;
+}
+
+.val-dim { color: var(--text-secondary); font-weight: 500; }
+.val-bold { color: var(--text-primary); font-weight: 500; }
+.val-green { color: var(--green-success); font-weight: 500; }
+.val-amber { color: var(--amber-warning); font-weight: 500; }
+.val-red-urgent { color: var(--red-danger); font-weight: 600; }
+
+.risk-pill-high {
+  background-color: #FDECEA;
+  color: var(--red-danger);
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: inline-flex;
+}
+
+/* Action Row (Volta/Pinebrook) */
+.action-row {
+  margin-top: 16px;
+  border-top: 1px solid var(--surface-gray);
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.action-note {
+  font-size: 12px;
+  color: var(--text-secondary);
+  font-style: italic;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-view {
+  background-color: var(--white);
+  border: 1px solid var(--border-gray);
+  color: var(--text-secondary);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.btn-review {
+  background-color: var(--primary-blue);
+  border: none;
+  color: var(--white);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(1,118,211,0.25);
+  cursor: pointer;
+}

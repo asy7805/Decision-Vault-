@@ -1,0 +1,157 @@
+.sidebar {
+  width: var(--sidebar-width);
+  background-color: var(--dark-navy);
+  position: fixed;
+  left: 0;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  box-shadow: var(--shadow-sidebar);
+}
+
+.sidebar-top {
+  padding: var(--spacing-4);
+}
+
+.brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-2);
+  margin-bottom: var(--spacing-1);
+}
+
+.brand-name {
+  color: var(--white);
+  font-size: var(--font-md);
+  font-weight: 600;
+}
+
+.brand-subtitle {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-xs);
+  padding-left: 28px; /* Offset to align with text */
+}
+
+.sidebar-divider {
+  height: 1px;
+  background-color: rgba(255, 255, 255, 0.1);
+  width: 100%;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding-top: var(--spacing-2);
+  overflow: hidden; /* Never scrolls per spec */
+}
+
+.nav-item {
+  height: 44px;
+  padding: 0 var(--spacing-4);
+  margin: 2px var(--spacing-2);
+  border-radius: var(--radius-sm);  /* 6px requested, radius-md is 8, I'll use 6px explicitly */
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  transition: all 150ms ease;
+}
+
+.nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.06);
+}
+
+.nav-item:focus-visible {
+  outline: none;
+  background-color: rgba(255, 255, 255, 0.12);
+  box-shadow: none; /* override index.css button focus */
+}
+
+.nav-item .nav-icon {
+  color: var(--white);
+  opacity: 0.7;
+}
+
+.nav-item .nav-label {
+  color: var(--white);
+  font-size: var(--font-base);
+  font-weight: 400;
+  opacity: 0.7;
+}
+
+/* Active State */
+.nav-item.active {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.nav-item.active .nav-icon,
+.nav-item.active .nav-label {
+  opacity: 1;
+}
+
+.nav-item.active .nav-label {
+  font-weight: 500;
+}
+
+/* 3px left border flush with the sidebar edge: 
+   Since nav-item has 8px left margin, the pseudo-element 
+   is shifted -8px to hit the sidebar edge. */
+.nav-border-indicator {
+  position: absolute;
+  left: -8px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: transparent;
+  border-radius: 0 3px 3px 0;
+}
+
+.nav-item.active .nav-border-indicator {
+  background-color: var(--salesforce-teal);
+}
+
+.sidebar-bottom-wrapper {
+  margin-top: auto;
+}
+
+.sidebar-bottom {
+  padding: var(--spacing-4);
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-3);
+}
+
+.avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background-color: var(--primary-blue);
+  color: var(--white);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.user-name {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: var(--font-sm);
+  font-weight: 500;
+  margin-bottom: 2px;
+}
+
+.user-role {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: var(--font-xs);
+}

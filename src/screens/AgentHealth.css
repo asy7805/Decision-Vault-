@@ -1,0 +1,350 @@
+/* Layout Container */
+.ah-container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 32px;
+}
+
+/* Animations */
+@keyframes ahFadeInUpSubtle {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes ahFadeInUp {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* 1. Summary Pills */
+.ah-summary-pills {
+  display: flex;
+  gap: 12px;
+  opacity: 0;
+  animation: ahFadeInUpSubtle 250ms ease-out 0ms forwards;
+}
+
+.ah-summary-pill {
+  background: var(--white);
+  border: 1px solid var(--border-gray);
+  border-radius: 20px;
+  padding: 8px 16px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  font-size: 13px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* 2. Chart Card */
+.ah-chart-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border-gray);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  padding: 24px;
+  overflow: hidden;
+  opacity: 0;
+  animation: ahFadeInUp 300ms ease-out 100ms forwards;
+}
+
+.ah-chart-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.ah-ch-left .ah-ch-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.ah-ch-left .ah-ch-subtitle {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+}
+
+.ah-ch-right {
+  display: flex;
+  gap: 8px;
+}
+
+.ah-time-pill {
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.ah-tp-active {
+  background: var(--primary-blue);
+  color: var(--white);
+  border: none;
+}
+
+.ah-tp-inactive {
+  background: var(--white);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-gray);
+}
+
+.ah-chart-wrapper {
+  margin-top: 24px;
+  height: 280px;
+  width: 100%;
+}
+
+.ah-chart-tooltip {
+  background: var(--white);
+  border: 1px solid var(--border-gray);
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.ah-tooltip-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+}
+
+.ah-tooltip-val {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.ah-chart-footer {
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--text-secondary);
+}
+
+.ah-cf-text {
+  font-size: 12px;
+  font-style: italic;
+}
+
+/* 3. Insight Callout Card */
+.ah-insight-card {
+  background: linear-gradient(135deg, #032D60 0%, #0176D3 100%);
+  border-radius: 12px;
+  padding: 24px 28px;
+  position: relative;
+  overflow: hidden;
+  opacity: 0;
+  animation: ahFadeInUp 300ms ease-out 200ms forwards;
+}
+
+.ah-threejs-container {
+  width: 120px;
+  height: 120px;
+  position: absolute;
+  top: 0;
+  right: 0;
+  opacity: 0.15;
+  pointer-events: none;
+}
+
+.ah-ic-content {
+  position: relative;
+  z-index: 1;
+}
+
+.ah-ic-top {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.ah-ic-kicker {
+  font-size: 12px;
+  font-weight: 600;
+  color: white;
+  opacity: 0.7;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.ah-ic-main {
+  font-size: 15px;
+  color: white;
+  line-height: 1.7;
+  font-weight: 400;
+  max-width: 900px;
+}
+
+.ah-ic-bottom {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.ah-icB-left {
+  display: flex;
+  gap: 24px;
+}
+
+.ah-icB-stat {
+  display: flex;
+  flex-direction: column;
+}
+
+.ah-icB-val {
+  font-size: 24px;
+  font-weight: 600;
+  color: white;
+}
+
+.ah-icB-lbl {
+  font-size: 11px;
+  color: white;
+  opacity: 0.6;
+  margin-top: 2px;
+}
+
+.ah-icB-btn {
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 150ms ease;
+}
+
+.ah-icB-btn:hover {
+  background: rgba(255,255,255,0.22);
+}
+
+/* 4. Agent Performance Table */
+.ah-table-card {
+  background: var(--white);
+  border-radius: 12px;
+  border: 1px solid var(--border-gray);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  opacity: 0;
+  animation: ahFadeInUp 300ms ease-out 300ms forwards;
+}
+
+.ah-tbl-header-bar {
+  background: #F8F9FA;
+  border-bottom: 1px solid var(--border-gray);
+  height: 44px;
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ah-tbl-hb-left { font-size: 14px; font-weight: 600; color: var(--text-primary); }
+.ah-tbl-hb-right { font-size: 12px; color: var(--text-secondary); }
+
+/* Table Grid Config */
+.ah-tbl-row {
+  display: flex;
+  padding: 0 24px;
+  align-items: center;
+}
+
+.ah-tbl-col-1 { width: 30%; }
+.ah-tbl-col-2 { width: 15%; }
+.ah-tbl-col-3 { width: 12%; }
+.ah-tbl-col-4 { width: 15%; }
+.ah-tbl-col-5 { width: 13%; }
+.ah-tbl-col-6 { width: 15%; }
+
+.ah-tbl-cols {
+  background: #F8F9FA;
+  border-bottom: 1px solid var(--border-gray);
+  height: 40px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Data Rows */
+.ah-tbl-data-row {
+  height: 56px;
+  border-bottom: 1px solid var(--surface-gray);
+  font-size: 14px;
+  transition: background 150ms ease;
+}
+
+.ah-tbl-data-row:last-child {
+  border-bottom: none;
+}
+
+.ah-tbl-data-row:hover {
+  background: #F8F9FA;
+}
+
+/* Row Content Styling */
+.ah-td-agent {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  color: var(--text-primary);
+}
+
+.ah-td-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-right: 8px;
+}
+.ah-dot-red   { background: var(--red-danger); }
+.ah-dot-amber { background: var(--amber-warning); }
+.ah-dot-green { background: var(--green-success); }
+
+.ah-td-val { color: var(--text-primary); }
+
+.ah-td-rate { font-weight: 600; }
+.ah-rate-red   { color: var(--red-danger); }
+.ah-rate-amber { color: var(--amber-warning); }
+.ah-rate-green { color: var(--green-success); }
+
+.ah-td-badge {
+  font-size: 12px;
+  font-weight: 500;
+  border-radius: 20px;
+  padding: 3px 10px;
+  display: inline-block;
+}
+
+.ah-badge-retrain { background: #FDECEA; color: var(--red-danger); }
+.ah-badge-monitor { background: #FFF4E8; color: var(--amber-warning); }
+.ah-badge-healthy { background: #EEF6F0; color: var(--green-success); }
+
+/* Table Footer */
+.ah-tbl-footer {
+  height: 44px;
+  background: #F8F9FA;
+  border-top: 1px solid var(--border-gray);
+  padding: 0 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.ah-tbl-f-right {
+  font-style: italic;
+}
