@@ -1,8 +1,8 @@
 import React from 'react';
-import { Inbox, Clock, CheckCircle, Timer, AlertTriangle } from 'lucide-react';
+import { Inbox, Clock, CheckCircle, Timer, AlertTriangle, ChevronRight } from 'lucide-react';
 import './ReviewQueue.css';
 
-export default function ReviewQueue() {
+export default function ReviewQueue({ setActiveScreen, setActiveAccount }) {
   return (
     <div className="queue-container">
       
@@ -82,7 +82,10 @@ export default function ReviewQueue() {
         </div>
 
         {/* CARD 2: Volta (Urgent) */}
-        <div className="decision-card volta-card">
+        <div 
+          className="decision-card volta-card volta-clickable" 
+          onClick={() => { setActiveAccount('volta_energy'); setActiveScreen('detail'); }}
+        >
           <div className="card-header-row">
             <div className="header-left">
               <div className="card-title title-pending">Volta Energy</div>
@@ -92,6 +95,7 @@ export default function ReviewQueue() {
             <div className="status-badge badge-pending">
               <div className="badge-pulse"></div>
               Pending Review
+              <ChevronRight size={16} color="#747474" style={{ marginLeft: '4px' }} />
             </div>
           </div>
           
@@ -130,7 +134,10 @@ export default function ReviewQueue() {
         </div>
 
         {/* CARD 3: Pinebrook (Longest Waiting) */}
-        <div className="decision-card pinebrook-card">
+        <div 
+          className="decision-card pinebrook-card pinebrook-clickable"
+          onClick={() => { setActiveAccount('pinebrook_saas'); setActiveScreen('detail'); }}
+        >
           <div className="urgency-banner">
             <AlertTriangle size={12} color="var(--red-danger)" />
             <span className="urgency-text">Waiting 4+ hours — immediate review recommended</span>
@@ -145,6 +152,7 @@ export default function ReviewQueue() {
             <div className="status-badge badge-pending">
               <div className="badge-pulse"></div>
               Pending Review
+              <ChevronRight size={16} color="var(--red-danger)" style={{ marginLeft: '4px' }} />
             </div>
           </div>
           

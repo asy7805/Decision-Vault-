@@ -178,6 +178,25 @@
   animation: hargrovePulse 1200ms ease-in-out 600ms 1 forwards;
 }
 
+/* Summit Row */
+.summit-row {
+  cursor: pointer;
+}
+
+.summit-row:hover {
+  background-color: rgba(1, 118, 211, 0.04);
+}
+
+.summit-row::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background-color: #0176D3;
+}
+
 .hargrove-account-col {
   font-weight: 500;
 }

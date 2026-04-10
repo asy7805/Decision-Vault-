@@ -407,14 +407,14 @@
 .banner-title {
   font-size: 13px;
   font-weight: 600;
-  color: var(--amber-warning);
+  color: #9A4B0F;
 }
 
 .banner-desc {
-  font-size: 12px;
-  color: var(--amber-warning);
+  font-size: 13px;
+  color: var(--text-primary);
   line-height: 1.5;
-  opacity: 0.85;
+  opacity: 1;
 }
 
 /* Resolved Box (Green override state) */

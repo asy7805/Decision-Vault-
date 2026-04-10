@@ -9,7 +9,7 @@
   --teal-light: #F0FAFA;
   --white: #FFFFFF;
   --surface-gray: #F3F3F3;
-  --border-gray: #E5E5E5;
+  --border-gray: #D8DDE6;
   --text-primary: #181818;
   --text-secondary: #747474;
   --amber-warning: #FF9A3C;
@@ -42,7 +42,7 @@
   --radius-lg: 12px;
 
   /* Shadows */
-  --shadow-card: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-card: 0 1px 3px rgba(0,0,0,0.08), 0 4px 12px rgba(0,0,0,0.04);
   --shadow-elevated: 0 4px 16px rgba(0,0,0,0.10);
   --shadow-sidebar: 2px 0 8px rgba(0,0,0,0.06);
 

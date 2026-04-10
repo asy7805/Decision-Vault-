@@ -10,7 +10,7 @@ import ReviewQueue from '../screens/ReviewQueue';
 import RegulatoryReports from '../screens/RegulatoryReports';
 import AgentHealth from '../screens/AgentHealth';
 
-export default function Layout({ activeScreen, setActiveScreen }) {
+export default function Layout({ activeScreen, setActiveScreen, activeAccount, setActiveAccount }) {
   const [displayScreen, setDisplayScreen] = useState(activeScreen);
   const [fadeState, setFadeState] = useState('in'); // 'in' or 'out'
 
@@ -31,12 +31,12 @@ export default function Layout({ activeScreen, setActiveScreen }) {
 
   const renderScreen = () => {
     switch (displayScreen) {
-      case 'feed': return <DecisionFeed setActiveScreen={setActiveScreen} />;
-      case 'detail': return <DecisionDetail />;
-      case 'queue': return <ReviewQueue />;
+      case 'feed': return <DecisionFeed setActiveScreen={setActiveScreen} setActiveAccount={setActiveAccount} />;
+      case 'detail': return <DecisionDetail activeAccount={activeAccount} setActiveScreen={setActiveScreen} />;
+      case 'queue': return <ReviewQueue setActiveScreen={setActiveScreen} setActiveAccount={setActiveAccount} />;
       case 'reports': return <RegulatoryReports />;
       case 'health': return <AgentHealth />;
-      default: return <DecisionFeed setActiveScreen={setActiveScreen} />;
+      default: return <DecisionFeed setActiveScreen={setActiveScreen} setActiveAccount={setActiveAccount} />;
     }
   };
 

@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import { ChevronRight, CheckCircle, AlertTriangle, Shield, Database, TrendingUp, Calendar, FileText, X } from 'lucide-react';
+import { ChevronRight, CheckCircle, AlertTriangle, Shield, Database, TrendingUp, Calendar, FileText, X, Clock } from 'lucide-react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 import ErrorBoundary from '../components/ErrorBoundary';
+import { ACCOUNT_DETAILS } from '../data/hardcodedData';
 import './DecisionDetail.css';
 
 // ----------------------------------------------------
@@ -65,13 +66,19 @@ const NodeGraph = () => {
 // ----------------------------------------------------
 // Main Component
 // ----------------------------------------------------
-export default function DecisionDetail({ setActiveScreen }) {
+export default function DecisionDetail({ activeAccount, setActiveScreen }) {
   const [showModal, setShowModal] = useState(false);
   const [isModalClosing, setIsModalClosing] = useState(false);
   const [isConfirming, setIsConfirming] = useState(false);
   const [isResolved, setIsResolved] = useState(false);
   const [showToast, setShowToast] = useState(false);
   const [isToastFading, setIsToastFading] = useState(false);
+
+  const acct = ACCOUNT_DETAILS[activeAccount] || ACCOUNT_DETAILS['hargrove'];
+  const isHargrove = activeAccount === 'hargrove';
+  const isPinebrook = activeAccount === 'pinebrook_saas';
+  const isSummit = activeAccount === 'summit_insurance';
+  const isVolta = activeAccount === 'volta_energy';
 
   const handleCloseModal = () => {
     setIsModalClosing(true);
@@ -109,23 +116,35 @@ export default function DecisionDetail({ setActiveScreen }) {
       {/* ---------- Screen Header ---------- */}
       <div className="screen-header anim-fade-in">
         <div className="breadcrumb-nav">
-          <span className="bc-link" onClick={() => setActiveScreen('feed')}>Decision Feed</span>
+          <span className="bc-link" onClick={() => setActiveScreen(acct.back_target)}>{acct.back_label}</span>
           <ChevronRight size={12} color="var(--text-secondary)" />
-          <span className="bc-text-bold">Hargrove Construction</span>
+          <span className="bc-text-bold">{acct.account_info.name}</span>
           <ChevronRight size={12} color="var(--text-secondary)" />
-          <span className="bc-text-dim">Decision #DV-2847</span>
+          <span className="bc-text-dim">Decision #{acct.account_info.decision_id}</span>
         </div>
         
         <div className="header-right">
-          {!isResolved ? (
+          {isSummit ? (
+            <div className="header-status-badge escalate-badge" style={{ backgroundColor: '#FDECEA', borderColor: 'var(--red-danger)', color: 'var(--red-danger)' }}>
+              <AlertTriangle size={14} color="var(--red-danger)" />
+              Legal Review
+            </div>
+          ) : isHargrove ? (
+            !isResolved ? (
+              <div className="header-status-badge">
+                <span className="pulse-dot-amber"></span>
+                Awaiting Review
+              </div>
+            ) : (
+              <div className="header-status-badge resolved">
+                <CheckCircle size={14} color="var(--green-success)" />
+                Overridden
+              </div>
+            )
+          ) : (
             <div className="header-status-badge">
               <span className="pulse-dot-amber"></span>
               Awaiting Review
-            </div>
-          ) : (
-            <div className="header-status-badge resolved">
-              <CheckCircle size={14} color="var(--green-success)" />
-              Overridden
             </div>
           )}
           <span className="header-timestamp">Flagged 2 min ago</span>
@@ -140,10 +159,12 @@ export default function DecisionDetail({ setActiveScreen }) {
           
           <div className="account-info-card">
             <div className="card-title-lockup">
-              <div className="avatar-large">HC</div>
+              <div className="avatar-large" style={{ background: acct.account_info.avatar_gradient !== 'none' ? acct.account_info.avatar_gradient : '#F3F3F3' }}>
+                {acct.account_info.initials}
+              </div>
               <div className="account-titles">
-                <h2>Hargrove Construction</h2>
-                <p>Commercial Lending &middot; Enterprise</p>
+                <h2>{acct.account_info.name}</h2>
+                <p>{acct.account_info.subtitle}</p>
               </div>
             </div>
             
@@ -152,27 +173,27 @@ export default function DecisionDetail({ setActiveScreen }) {
             <div className="fields-stack">
               <div className="data-field">
                 <label>Deal Size</label>
-                <div className="field-val">$2,300,000</div>
+                <div className="field-val">{acct.account_info.deal_size}</div>
               </div>
               <div className="data-field">
                 <label>Industry</label>
-                <div className="field-val">Commercial Lending</div>
+                <div className="field-val">{acct.account_info.industry}</div>
               </div>
               <div className="data-field">
                 <label>Account Owner</label>
-                <div className="field-val">Sarah Chen</div>
+                <div className="field-val">{acct.account_info.account_owner}</div>
               </div>
               <div className="data-field">
                 <label>Renewal Date</label>
-                <div className="field-val val-urgent">June 14, 2026</div>
+                <div className="field-val val-urgent">{acct.account_info.renewal_date}</div>
               </div>
               <div className="data-field">
                 <label>Account Status</label>
-                <div className="field-val">Active — 3 Year Customer</div>
+                <div className="field-val">{acct.account_info.account_status}</div>
               </div>
               <div className="data-field">
                 <label>Agent Action Queued</label>
-                <div className="field-val val-warning">Initiate credit line review and flag for downgrade</div>
+                <div className="field-val val-warning">{acct.account_info.agent_action}</div>
               </div>
             </div>
           </div>
@@ -181,22 +202,22 @@ export default function DecisionDetail({ setActiveScreen }) {
             <div className="objects-title">Salesforce Objects Analyzed</div>
             <div className="object-pill-stack">
               <div className="obj-pill pill-account">
-                <Database size={14} /> Account Object
+                <Database size={14} /> {acct.salesforce_objects[0]}
               </div>
               <div className="obj-link-line"></div>
               
               <div className="obj-pill pill-opportunity">
-                <TrendingUp size={14} /> Opportunity Object
+                <TrendingUp size={14} /> {acct.salesforce_objects[1]}
               </div>
               <div className="obj-link-line"></div>
               
               <div className="obj-pill pill-activity">
-                <Calendar size={14} /> Activity Object
+                <Calendar size={14} /> {acct.salesforce_objects[2]}
               </div>
               <div className="obj-link-line"></div>
               
               <div className="obj-pill pill-case">
-                <FileText size={14} /> Case Object
+                <FileText size={14} /> {acct.salesforce_objects[3]}
               </div>
             </div>
             <div className="objects-footer">
@@ -222,12 +243,12 @@ export default function DecisionDetail({ setActiveScreen }) {
                 <div className="signal-header-row">
                   <div className="signal-title-group">
                     <CheckCircle size={18} color="var(--green-success)" />
-                    <span>Signal 1 — Payment delays detected</span>
+                    <span>{acct.signals.signal_1.title}</span>
                   </div>
-                  <div className="signal-weight-pill">Weight: High</div>
+                  <div className="signal-weight-pill">Weight: {acct.signals.signal_1.weight}</div>
                 </div>
-                <div className="signal-source">Source: Salesforce Opportunity Object</div>
-                <div className="signal-detail">3 invoices overdue 15+ days in the last 60 days — payment velocity declining quarter over quarter</div>
+                <div className="signal-source">Source: {acct.signals.signal_1.source}</div>
+                <div className="signal-detail">{acct.signals.signal_1.detail}</div>
               </div>
 
               {/* SIGNAL 2 */}
@@ -235,52 +256,64 @@ export default function DecisionDetail({ setActiveScreen }) {
                 <div className="signal-header-row">
                   <div className="signal-title-group">
                     <CheckCircle size={18} color="var(--green-success)" />
-                    <span>Signal 2 — Credit utilization spike</span>
+                    <span>{acct.signals.signal_2.title}</span>
                   </div>
-                  <div className="signal-weight-pill">Weight: High</div>
+                  <div className="signal-weight-pill">Weight: {acct.signals.signal_2.weight}</div>
                 </div>
-                <div className="signal-source">Source: Salesforce Account Object</div>
-                <div className="signal-detail">Credit utilization up 40% month over month — exceeds internal risk threshold of 25%</div>
+                <div className="signal-source">Source: {acct.signals.signal_2.source}</div>
+                <div className="signal-detail">{acct.signals.signal_2.detail}</div>
               </div>
 
-              {/* SIGNAL 3 (Amber Warning or Green when Resolved) */}
-              <div className={`signal-card anim-signal-3 ${!isResolved ? 'signal-amber' : ''}`}>
+              {/* SIGNAL 3 (Amber Warning or Green when Resolved/NoWarning) */}
+              <div className={`signal-card anim-signal-3 ${(isHargrove && !isResolved) || isPinebrook ? 'signal-amber' : ''}`}>
                 <div className="signal-header-row">
                   <div className="signal-title-group">
-                    {!isResolved ? (
+                    {((isHargrove && !isResolved) || isPinebrook) ? (
                       <AlertTriangle size={18} color="var(--amber-warning)" />
                     ) : (
                       <CheckCircle size={18} color="var(--green-success)" />
                     )}
-                    <span>Signal 3 — No recent contact logged</span>
+                    <span>{acct.signals.signal_3.title}</span>
                   </div>
-                  <div className={`signal-weight-pill ${!isResolved ? 'weight-pill-amber' : ''}`}>Weight: High</div>
+                  <div className={`signal-weight-pill ${((isHargrove && !isResolved) || isPinebrook) ? 'weight-pill-amber' : ''}`}>
+                    {isHargrove && isResolved ? 'Weight: High' : `Weight: ${acct.signals.signal_3.weight}`}
+                  </div>
                 </div>
-                <div className="signal-source">Source: Salesforce Activity Object</div>
-                <div className="signal-detail">Last logged activity: 47 days ago — no calls, emails, or meetings recorded in Salesforce</div>
+                <div className="signal-source">Source: {acct.signals.signal_3.source}</div>
+                <div className="signal-detail">{acct.signals.signal_3.detail}</div>
                 
-                {!isResolved ? (
+                {isHargrove ? (
+                  !isResolved ? (
+                    <div className="warning-banner anim-banner-pulse">
+                      <AlertTriangle size={16} color="var(--amber-warning)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <div className="banner-content">
+                        <div className="banner-title">{acct.signals.signal_3.warning_title}</div>
+                        <div className="banner-desc">{acct.signals.signal_3.warning_desc}</div>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="resolved-banner">
+                      <CheckCircle size={16} color="var(--green-success)" style={{ flexShrink: 0, marginTop: '2px' }} />
+                      <div className="banner-content">
+                        <div className="resolved-title">Override logged by Marcus Thompson — Contact data flagged as incomplete. Reassess in 30 days.</div>
+                      </div>
+                    </div>
+                  )
+                ) : isPinebrook ? (
                   <div className="warning-banner anim-banner-pulse">
                     <AlertTriangle size={16} color="var(--amber-warning)" style={{ flexShrink: 0, marginTop: '2px' }} />
                     <div className="banner-content">
-                      <div className="banner-title">Data integrity flag detected</div>
-                      <div className="banner-desc">Decision Vault detected 2 unlogged activities. Rep activity exists in calendar and email but was not synced to Salesforce. This signal may be unreliable.</div>
+                      <div className="banner-title">{acct.signals.signal_3.warning_title}</div>
+                      <div className="banner-desc">{acct.signals.signal_3.warning_desc}</div>
                     </div>
                   </div>
-                ) : (
-                  <div className="resolved-banner">
-                    <CheckCircle size={16} color="var(--green-success)" style={{ flexShrink: 0, marginTop: '2px' }} />
-                    <div className="banner-content">
-                      <div className="resolved-title">Override logged by Marcus Thompson — Contact data flagged as incomplete. Reassess in 30 days.</div>
-                    </div>
-                  </div>
-                )}
+                ) : null}
               </div>
             </div>
 
             <div className="assessment-row">
               <div className="assessment-title">Decision Vault Assessment</div>
-              <div className="assessment-body">Signal 3 contains incomplete data from the Salesforce Activity Object. Human review is required before this action executes. Approving without verification may result in incorrect account action.</div>
+              <div className="assessment-body">{acct.assessment}</div>
             </div>
 
           </div>
@@ -290,46 +323,100 @@ export default function DecisionDetail({ setActiveScreen }) {
       </div>
 
       {/* ---------- Bottom Action Bar ---------- */}
-      <div className="action-bar anim-slide-up">
-        
-        <div className="ab-metrics">
-          <div className="ab-metric-col">
-            <span className="ab-label">Confidence Score</span>
-            <div className="confidence-bg">
-              <div className="confidence-fill"></div>
+      {isHargrove ? (
+        <div className="action-bar anim-slide-up">
+          <div className="ab-metrics">
+            <div className="ab-metric-col">
+              <span className="ab-label">Confidence Score</span>
+              <div className="confidence-bg">
+                <div className="confidence-fill"></div>
+              </div>
+              <span className="confidence-detail">{acct.account_info.confidence_score}% — Low confidence due to data integrity flag</span>
             </div>
-            <span className="confidence-detail">73% — Low confidence due to data integrity flag</span>
+            <div className="ab-metric-col">
+              <span className="ab-label">Risk Level</span>
+              <div className="risk-pill-large">HIGH RISK</div>
+            </div>
           </div>
 
-          <div className="ab-metric-col">
-            <span className="ab-label">Risk Level</span>
-            <div className="risk-pill-large">HIGH RISK</div>
+          <div className="ab-buttons">
+            {!isResolved ? (
+              <>
+                <button className="btn-secondary">
+                  <CheckCircle size={16} color="var(--text-secondary)" />
+                  Approve and Execute
+                </button>
+                <button className="btn-primary" onClick={() => setShowModal(true)}>
+                  <Shield size={16} color="var(--white)" />
+                  Override Decision
+                </button>
+              </>
+            ) : (
+              <div className="resolved-pill-large">
+                <CheckCircle size={16} color="var(--green-success)" />
+                Override logged successfully — Decision #{acct.account_info.decision_id} will not execute
+              </div>
+            )}
           </div>
         </div>
-
-        <div className="ab-buttons">
-          {!isResolved ? (
-            <>
-              <button className="btn-secondary">
-                <CheckCircle size={16} color="var(--text-secondary)" />
-                Approve and Execute
-              </button>
-              <button className="btn-primary" onClick={() => setShowModal(true)}>
-                <Shield size={16} color="var(--white)" />
-                Override Decision
-              </button>
-            </>
-          ) : (
-            <div className="resolved-pill-large">
-              <CheckCircle size={16} color="var(--green-success)" />
-              Override logged successfully — Decision #DV-2847 will not execute
+      ) : isSummit ? (
+        <div className="action-bar escalated-bar anim-slide-up" style={{ backgroundColor: '#FDECEA', borderTop: '1px solid #EA001E', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          
+          <div className="ab-metrics">
+            <div className="ab-metric-col">
+              <span className="ab-label">Confidence Score</span>
+              <div className="confidence-bg">
+                <div className="confidence-fill" style={{ width: `${acct.account_info.confidence_score}%` }}></div>
+              </div>
+              <span className="confidence-detail">{acct.account_info.confidence_score}% — High confidence</span>
             </div>
-          )}
-        </div>
-      </div>
+            <div className="ab-metric-col">
+              <span className="ab-label">Risk Level</span>
+              <div className="risk-pill-large" style={{ backgroundColor: 'var(--red-danger)', color: 'white' }}>HIGH RISK</div>
+            </div>
+          </div>
 
-      {/* ---------- Override Modal ---------- */}
-      {showModal && (
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <AlertTriangle size={16} color="var(--red-danger)" />
+              <span style={{ fontSize: '13px', color: 'var(--red-danger)', fontWeight: 500 }}>{acct.account_info.escalation_status}</span>
+            </div>
+            <button style={{ backgroundColor: 'var(--white)', border: '1px solid var(--border-gray)', color: 'var(--text-secondary)', borderRadius: '8px', padding: '10px 20px', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }} onClick={() => setActiveScreen('feed')}>
+              Back to Feed
+            </button>
+          </div>
+        </div>
+      ) : (
+        <div className="action-bar read-only-bar anim-slide-up" style={{ backgroundColor: 'var(--white)', borderTop: '1px solid var(--border-gray)', padding: '16px 32px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', height: 'auto' }}>
+          
+          <div className="ab-metrics">
+            <div className="ab-metric-col">
+              <span className="ab-label">Confidence Score</span>
+              <div className="confidence-bg">
+                <div className="confidence-fill" style={{ width: `${acct.account_info.confidence_score}%` }}></div>
+              </div>
+              <span className="confidence-detail">{acct.account_info.confidence_score}% — {acct.account_info.confidence_score < 75 ? 'Low confidence' : 'High confidence'}</span>
+            </div>
+            <div className="ab-metric-col">
+              <span className="ab-label">Risk Level</span>
+              <div className="risk-pill-large" style={{ backgroundColor: 'var(--red-danger)', color: 'white' }}>HIGH RISK</div>
+            </div>
+          </div>
+
+          <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <div style={{display: 'flex', alignItems: 'center'}}><Clock size={16} color="var(--amber-warning)" style={{marginRight: '4px'}} /></div>
+              <span style={{ fontSize: '13px', color: 'var(--amber-warning)', fontWeight: 500 }}>{acct.account_info.queue_status}</span>
+            </div>
+            <button style={{ backgroundColor: 'var(--white)', border: '1px solid var(--border-gray)', color: 'var(--text-secondary)', borderRadius: '8px', padding: '10px 20px', fontSize: '13px', fontWeight: 500, cursor: 'pointer' }} onClick={() => setActiveScreen('queue')}>
+              Back to Queue
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* ---------- Override Modal (Hargrove Only) ---------- */}
+      {isHargrove && showModal && (
         <div className="modal-overlay">
           <div className={`modal-card ${isModalClosing ? 'closing' : ''}`}>
             
@@ -343,7 +430,7 @@ export default function DecisionDetail({ setActiveScreen }) {
               </button>
             </div>
             
-            <div className="modal-subheader">Decision #DV-2847 &middot; Hargrove Construction</div>
+            <div className="modal-subheader">Decision #{acct.account_info.decision_id} &middot; {acct.account_info.name}</div>
             <div className="modal-divider"></div>
             
             <div className="override-form">
@@ -380,11 +467,11 @@ export default function DecisionDetail({ setActiveScreen }) {
         </div>
       )}
 
-      {/* ---------- Toast Notification ---------- */}
-      {showToast && (
+      {/* ---------- Toast Notification (Hargrove Only) ---------- */}
+      {isHargrove && showToast && (
         <div className={`toast-notification ${isToastFading ? 'toast-fade-out' : ''}`}>
           <CheckCircle size={16} color="var(--white)" />
-          Decision logged &middot; Hargrove Construction
+          Decision logged &middot; {acct.account_info.name}
         </div>
       )}
 

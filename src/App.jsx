@@ -3,9 +3,15 @@ import Layout from './components/Layout';
 
 function App() {
   const [activeScreen, setActiveScreen] = useState('feed');
+  const [activeAccount, setActiveAccount] = useState('hargrove');
 
   return (
-    <Layout activeScreen={activeScreen} setActiveScreen={setActiveScreen} />
+    <Layout 
+      activeScreen={activeScreen} 
+      setActiveScreen={setActiveScreen} 
+      activeAccount={activeAccount} 
+      setActiveAccount={setActiveAccount} 
+    />
   );
 }
 

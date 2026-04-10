@@ -20,7 +20,7 @@ const getStatusClass = (status) => {
   return 'status-auto';
 };
 
-export default function DecisionFeed({ setActiveScreen }) {
+export default function DecisionFeed({ setActiveScreen, setActiveAccount }) {
 
   return (
     <div className="feed-container">
@@ -72,31 +72,40 @@ export default function DecisionFeed({ setActiveScreen }) {
         </div>
 
         <div className="table-body">
-          {DECISIONS_FEED_DATA.map((row) => (
-            <div
-              key={row.id}
-              className={`table-row table-body-row ${row.isDemoEntryPoint ? 'hargrove-row' : 'row-locked'}`}
-              onClick={row.isDemoEntryPoint && setActiveScreen ? () => setActiveScreen('detail') : undefined}
-              title={row.isDemoEntryPoint ? undefined : 'Demo mode — click Hargrove Construction to continue'}
-            >
-              <div className={row.isDemoEntryPoint ? 'hargrove-account-col' : ''}>
-                {row.account}
+          {DECISIONS_FEED_DATA.map((row) => {
+            const isHargrove = row.id === 'd1';
+            const isSummit = row.id === 'd9';
+            const isClickable = isHargrove || isSummit;
+
+            return (
+              <div
+                key={row.id}
+                className={`table-row table-body-row ${isHargrove ? 'hargrove-row' : ''} ${isSummit ? 'summit-row' : ''} ${!isClickable ? 'row-locked' : ''}`}
+                onClick={isClickable && setActiveScreen ? () => {
+                  if (setActiveAccount) setActiveAccount(isHargrove ? 'hargrove' : 'summit_insurance');
+                  setActiveScreen('detail');
+                } : undefined}
+                title={isClickable ? undefined : 'Demo mode — click Hargrove Construction or Summit Insurance to continue'}
+              >
+                <div className={isHargrove ? 'hargrove-account-col' : ''}>
+                  {row.account}
+                </div>
+                <div>{row.action}</div>
+                <div>
+                  <span className={`risk-badge ${getRiskClass(row.risk)}`}>{row.risk}</span>
+                </div>
+                <div>
+                  <span className={`status-badge ${getStatusClass(row.status)}`}>{row.status}</span>
+                </div>
+                <div className="timestamp-col">
+                  <span>{row.time}</span>
+                  {isHargrove && (
+                    <ChevronRight size={16} color="var(--text-secondary)" className="chevron-icon" />
+                  )}
+                </div>
               </div>
-              <div>{row.action}</div>
-              <div>
-                <span className={`risk-badge ${getRiskClass(row.risk)}`}>{row.risk}</span>
-              </div>
-              <div>
-                <span className={`status-badge ${getStatusClass(row.status)}`}>{row.status}</span>
-              </div>
-              <div className="timestamp-col">
-                <span>{row.time}</span>
-                {row.isDemoEntryPoint && (
-                  <ChevronRight size={16} color="var(--text-secondary)" className="chevron-icon" />
-                )}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
 
         <div className="table-footer">

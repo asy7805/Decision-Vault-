@@ -148,6 +148,15 @@
   animation: fadeInUpStandard 300ms ease-out 350ms forwards;
 }
 
+.volta-clickable, .pinebrook-clickable {
+  cursor: pointer;
+  transition: background-color 150ms ease;
+}
+
+.volta-clickable:hover, .pinebrook-clickable:hover {
+  background-color: rgba(255, 154, 60, 0.04);
+}
+
 /* Card Header */
 .card-header-row {
   display: flex;
